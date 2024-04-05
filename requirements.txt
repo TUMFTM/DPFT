@@ -1,0 +1,14 @@
+argparse
+deepspeed<=0.13.0
+matplotlib
+numpy
+open3d
+opencv-python
+pymoo
+scipy
+sympy
+tensorboard
+torch_tb_profiler
+tqdm
+https://github.com/DanielPollithy/pypcd/archive/master.zip
+https://github.com/facebookresearch/pytorch3d/archive/stable.zip

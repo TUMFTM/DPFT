@@ -1,0 +1,162 @@
+{
+    "dataset": "kradar",
+    
+    "computing": {
+        "dtype": "float32",
+        "seed": 42,
+        "workers": 16,
+        "device": "cuda"
+    },
+
+    "data": {
+        "revision": "v2",
+        "camera": "",
+        "num_classes": 2,
+        "categories": {
+            "Sedan": 0,
+            "Bus or Truck": -1,
+            "Motorcycle": -1,
+            "Bicycle": -1,
+            "Bicycle Group": -1,
+            "Pedestrian": -1,
+            "Pedestrian Group": -1,
+            "Background": -1
+        },
+	"fov": {
+	    "x": [0.0, 72.0],
+	    "y": [-6.4, 6.4],
+	    "z": [-2.0, 6.0],
+	    "azimuth": [-50, 50]
+	}
+    },
+
+    "train": {
+        "batch_size": 4,
+        "shuffle": true,
+        "epochs": 200,
+        "logging": "epoch",
+        "optimizer": {
+            "name": "AdamW",
+            "lr": 0.0001
+        },
+        "anassigner": "HungarianAnassigner",
+        "criterion": "SetCriterion",
+        "losses": {
+            "class": "FocalLoss",
+            "center": "L1Loss",
+            "size": "L1Loss",
+            "angle": "L1Loss"
+        },
+        "loss_inputs": {
+            "class": ["class"],
+            "center": ["center"],
+            "size": ["size"],
+            "angle": ["angle"]
+        },
+        "loss_weights": {
+            "total_class": 1.0,
+            "object_class": 0.0,
+            "center": 1.0,
+            "size": 1.0,
+            "angle": 1.0
+        },
+        "scheduler": {
+            "name": "ConstantLR",
+            "factor": 1.0
+        }
+    },
+
+    "model": {
+        "name": "dprt",
+        "inputs": [
+            "radar_bev",
+            "radar_front"
+        ],
+        "skiplinks": {
+            "radar_bev": true,
+            "radar_front": true
+        },
+        "backbones": {
+            "radar_bev": {
+                "name": "ResNet50",
+                "weights": "IMAGENET1K_V2",
+                "in_channels": 6,
+                "multi_scale": 4,
+                "norm_layer": "BatchNorm2d"
+            },
+            "radar_front": {
+                "name": "ResNet50",
+                "weights": "IMAGENET1K_V2",
+                "in_channels": 6,
+                "multi_scale": 4,
+                "norm_layer": "BatchNorm2d"
+            }
+        },
+        "necks": {
+            "radar_bev": {
+                "name": "FPN",
+                "in_channels_list": [6, 256, 512, 1024, 2048],
+                "out_channels": 16
+            },
+            "radar_front": {
+                "name": "FPN",
+                "in_channels_list": [6, 256, 512, 1024, 2048],
+                "out_channels": 16
+            }
+        },
+        "embeddings": {
+            "radar_bev": {
+                "name": "sinusoidal_embedding",
+                "num_feats": 16,
+                "n_levels": 5,
+                "normalize": true
+            },
+            "radar_front": {
+                "name": "sinusoidal_embedding",
+                "num_feats": 16,
+                "n_levels": 5,
+                "normalize": true
+            }
+        },
+        "querent": {
+            "name": "data_agnostic_static_querent",
+            "transformation": "spher2cart",
+            "resolution": [20, 20, 1],
+            "minimum": [4, -50, 0],
+            "maximum": [72, 50, 0]
+        },
+        "fuser": {
+            "name": "IMPFusion",
+            "i_iter": 4,
+            "m_views": 2,
+            "d_model": 16,
+            "d_ffn": 32,
+            "n_queries": 400,
+            "n_levels": [5, 5],
+            "n_heads": [8, 8],
+            "n_points": [4, 4],
+            "norm": true,
+            "dropout": 0.1,
+            "reduction": "linear",
+            "activation": "Mish"
+        },
+        "head": {
+            "name": "linear_detection_head",
+            "in_channels": 16,
+            "num_classes": 2,
+            "num_reg_layers": 3,
+            "num_cls_layers": 3
+        }
+    },
+
+    "evaluate": {
+        "logging": "epoch",
+        "metrics": {
+            "mAP": "mAP3D",
+            "mGIoU": "mGIoU3D"
+        },
+        "exporter": {
+            "name": "kradar"
+        }
+    }
+}
