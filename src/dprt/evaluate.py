@@ -34,11 +34,11 @@ def main(src: str, cfg: str, checkpoint: str, dst: str):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('DPRT data preprocessing')
     parser.add_argument('--src', type=str, default='/data/kradar/processed',
-                        help="Path to the raw dataset folder.")
+                        help="Path to the processed dataset folder.")
     parser.add_argument('--cfg', type=str, default='/app/config/kradar.json',
                         help="Path to the configuration file.")
     parser.add_argument('--checkpoint', type=str, default='/app/log/',
-                        help="Path to the model checkpoint.")
+                        help="Path to save the evaluation log.")
     parser.add_argument('--dst', type=str, default='/app/log',
                         help="Path to save the processed dataset.")
     args = parser.parse_args()

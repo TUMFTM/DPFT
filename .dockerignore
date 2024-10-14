@@ -1,0 +1,55 @@
+# IPython
+profile_default/
+ipython_config.py
+
+### PyCharm ###
+.idea/
+
+# Distribution / packaging
+downloads/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Flask stuff:
+instance/
+
+# Environments
+.venv
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# ruff
+.ruff_cache/
+
+### VisualStudioCode ###
+.vscode/
+
+# Local History for Visual Studio Code
+.history/
+
+### Logging directory ###
+log/
+

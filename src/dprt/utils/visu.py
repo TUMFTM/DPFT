@@ -11,13 +11,13 @@ from dprt.utils.geometry import get_box_corners, get_transformation
 from dprt.utils.project import cart2spher, polar2cart, spher2cart
 
 
-# Define color map
-CM = LinearSegmentedColormap.from_list(
-    'cm', [[0.0, 0.2, 0.34901960784313724], [1.0, 1.0, 1.0]], N=100
+# Define TUM color map
+TUMCM = LinearSegmentedColormap.from_list(
+    'tum', [[0.0, 0.2, 0.34901960784313724], [1.0, 1.0, 1.0]], N=100
 )
 
 
-def get_accent_cm() -> Colormap:
+def get_tum_accent_cm() -> Colormap:
     return ListedColormap(np.array([
         [162, 173, 0],
         [227, 114, 34],
@@ -102,7 +102,7 @@ def visu_lidar_data(pc: np.ndarray,
     """
     # Get colormap
     if cm is None:
-        cm = CM
+        cm = TUMCM
 
     # Limit the point cloud
     if xlim is not None:
@@ -128,7 +128,7 @@ def visu_lidar_data(pc: np.ndarray,
 
     # Add bounding boxes
     if boxes is not None:
-        cm = get_accent_cm()
+        cm = get_tum_accent_cm()
 
         for box in boxes:
             # Create bounding box
@@ -334,7 +334,7 @@ def visu_2d_boxes(ax: plt.Axes,
             edges[:, i, 2, :] = z.reshape((M, res))
 
     # Get colormap
-    cm = get_accent_cm()
+    cm = get_tum_accent_cm()
 
     # Plot boxes
     for box_edges, box in zip(edges, boxes):
@@ -544,9 +544,9 @@ def visu_radar_tesseract(tesseract: np.ndarray,
 
     # Visualize 3D radar data
     if len(dims) == 3:
-        visu_3d_radar_data(cube=data, dims=dims, raster=raster, cm=CM, **kwargs)
+        visu_3d_radar_data(cube=data, dims=dims, raster=raster, cm=TUMCM, **kwargs)
 
     # Visualize 2D radar data
     if len(dims) == 2:
         visu_2d_radar_data(grid=data, dims=dims, raster=raster,
-                           r_max=r_max, label=names, cm=CM, **kwargs)
+                           r_max=r_max, label=names, cm=TUMCM, **kwargs)
