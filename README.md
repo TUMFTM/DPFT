@@ -174,18 +174,19 @@ If DPFT is useful or relevant to your research, please kindly recognize our cont
         "default-runtime": "nvidia" 
     }
     ```
+3. Remove Docker CLI plugin for extended build capabilities:
+    ```
+    sudo apt remove docker-buildx-plugin
+    ```
 
-3. Restart docker daemon:
+4. Restart docker daemon:
     ```
     sudo systemctl restart docker
     ```
 
-    Reference: https://stackoverflow.com/questions/59691207/docker-build-with-nvidia-runtime
-
-
-    If this doesn't solve the problem, try:
+5. Build Docker image:
     ```
-    DOCKER_BUILDKIT=0 docker build -t dprt:0.0.1 .
+    docker build -t dprt:0.0.1 .
     ```
 
     Reference: https://stackoverflow.com/questions/59691207/docker-build-with-nvidia-runtime
