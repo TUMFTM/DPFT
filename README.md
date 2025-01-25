@@ -18,10 +18,10 @@ The perception of autonomous vehicles has to be efficient, robust, and cost-effe
 ## 🏆 Results
 #### 3D object detection on the K-Radar dataset
 
-| Model | Modality | Total | Normal | Overcast | Fog  | Rain | Sleet | LightSnow | HeavySnow | Revision |
-|-------|----------|-------|--------|----------|------|------|-------|-----------|-----------|----------|
-| DPFT  | C + R    | 56.1  | 55.7   | 59.4     | 63.1 | 49.0 | 51.6  | 50.5      | 50.5      | v1.0     |
-| DPFT  | C + R    | 50.5  | 51.1   | 45.2     | 64.2 | 39.9 | 42.9  | 42.4      | 51.1      | v2.0     |
+| Model | Modality | Total | Normal | Overcast | Fog  | Rain | Sleet | LightSnow | HeavySnow | Revision | Checkpoint                                                              |
+|-------|----------|-------|--------|----------|------|------|-------|-----------|-----------|----------|-------------------------------------------------------------------------|
+| DPFT  | C + R    | 56.1  | 55.7   | 59.4     | 63.1 | 49.0 | 51.6  | 50.5      | 50.5      | v1.0     | [Link](https://zenodo.org/records/14738706/files/20240203-232344-241_checkpoint_0122.pt?download=1) |
+| DPFT  | C + R    | 50.5  | 51.1   | 45.2     | 64.2 | 39.9 | 42.9  | 42.4      | 51.1      | v2.0     | [Link](https://zenodo.org/records/14738706/files/20240220-123248-537_checkpoint_0049.pt?download=1) |
 
 
 
